@@ -32,6 +32,21 @@
       <p><strong>[ ]</strong> = optional</p>
       <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
     </div>
+
+
+
+     <!-- Nueva sección para obtener logs -->
+      <form id="log-form" method="get" style="background-color: #fff; max-width: 500px; margin: 50px auto; padding: 30px 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <h2 style="font-weight: bold; margin-top: 0;">Get Exercise Log</h2>
+        <p><code style="font-family: monospace; font-size: 1.2em; background-color: #f1f1f1; padding: 2px 4px; border-radius: 3px;">GET /api/users/:_id/logs?[from][&amp;to][&amp;limit]</code></p>
+        <input id="log-uid" type="text" name="userId" placeholder=":_id*" required style="display: block; margin-bottom: 10px; padding: 10px; width: 100%; border: 1px solid lightgrey; border-radius: 3px; font-size: 16px;" />
+        <input id="from" type="text" name="from" placeholder="from (yyyy-mm-dd)" style="display: block; margin-bottom: 10px; padding: 10px; width: 100%; border: 1px solid lightgrey; border-radius: 3px; font-size: 16px;" />
+        <input id="to" type="text" name="to" placeholder="to (yyyy-mm-dd)" style="display: block; margin-bottom: 10px; padding: 10px; width: 100%; border: 1px solid lightgrey; border-radius: 3px; font-size: 16px;" />
+        <input id="limit" type="text" name="limit" placeholder="limit (number)" style="display: block; margin-bottom: 10px; padding: 10px; width: 100%; border: 1px solid lightgrey; border-radius: 3px; font-size: 16px;" />
+        <input type="submit" value="Get Log" style="display: block; margin-bottom: 10px; padding: 10px; width: 100%; font-size: 16px; border-radius: 3px; background-color: #0a0a23; color: #fff; border: none; cursor: pointer; margin-top: 10px;" />
+      </form>
+      
+    </div>
     <script>
       const exerciseForm = document.getElementById("exercise-form");
 
@@ -41,6 +56,25 @@
 
         exerciseForm.submit();
       });
+
+      // Script para manejar el formulario de logs
+      const logForm = document.getElementById("log-form");
+
+      logForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const userId = document.getElementById("log-uid").value;
+        const from = document.getElementById("from").value;
+        const to = document.getElementById("to").value;
+        const limit = document.getElementById("limit").value;
+
+        let url = `/api/users/${userId}/logs?`;
+        if (from) url += `from=${from}&`;
+        if (to) url += `to=${to}&`;
+        if (limit) url += `limit=${limit}`;
+
+        window.location.href = url;
+      });
     </script>
+    
   </body>
 </html>
